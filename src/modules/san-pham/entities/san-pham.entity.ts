@@ -1,8 +1,9 @@
-import { ChiTietHoaDon } from 'src/chi-tiet-hoa-don/entities/chi-tiet-hoa-don.entity';
-import { DanhGiaSanPham } from 'src/danh-gia-san-pham/entities/danh-gia-san-pham.entity';
-import { DanhMuc } from 'src/danh-muc/entities/danh-muc.entity';
-import { KhoHang } from 'src/kho-hang/entities/kho-hang.entity';
-import { NhaCungCap } from 'src/nha-cung-cap/entities/nha-cung-cap.entity';
+
+import { ChiTietHoaDon } from 'src/modules/chi-tiet-hoa-don/entities/chi-tiet-hoa-don.entity';
+import { DanhGiaSanPham } from 'src/modules/danh-gia-san-pham/entities/danh-gia-san-pham.entity';
+import { DanhMuc } from 'src/modules/danh-muc/entities/danh-muc.entity';
+import { KhoHang } from 'src/modules/kho-hang/entities/kho-hang.entity';
+import { NhaCungCap } from 'src/modules/nha-cung-cap/entities/nha-cung-cap.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

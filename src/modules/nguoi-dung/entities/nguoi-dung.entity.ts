@@ -1,4 +1,5 @@
-import { LoaiKhachHang } from 'src/loai-khach-hang/entities/loai-khach-hang.entity';
+
+import { LoaiKhachHang } from 'src/modules/loai-khach-hang/entities/loai-khach-hang.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 

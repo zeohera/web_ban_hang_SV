@@ -1,4 +1,4 @@
-import { SanPham } from 'src/san-pham/entities/san-pham.entity';
+import { SanPham } from 'src/modules/san-pham/entities/san-pham.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity('KhoHang')

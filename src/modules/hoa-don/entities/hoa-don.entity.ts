@@ -1,5 +1,5 @@
-import { ChiTietHoaDon } from 'src/chi-tiet-hoa-don/entities/chi-tiet-hoa-don.entity';
-import { NguoiDung } from 'src/nguoi-dung/entities/nguoi-dung.entity';
+import { ChiTietHoaDon } from 'src/modules/chi-tiet-hoa-don/entities/chi-tiet-hoa-don.entity';
+import { NguoiDung } from 'src/modules/nguoi-dung/entities/nguoi-dung.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

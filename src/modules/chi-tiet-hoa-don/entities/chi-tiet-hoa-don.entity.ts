@@ -1,5 +1,5 @@
-import { HoaDon } from 'src/hoa-don/entities/hoa-don.entity';
-import { SanPham } from 'src/san-pham/entities/san-pham.entity';
+import { HoaDon } from 'src/modules/hoa-don/entities/hoa-don.entity';
+import { SanPham } from 'src/modules/san-pham/entities/san-pham.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 @Entity('ChiTietHoaDon')
 export class ChiTietHoaDon {

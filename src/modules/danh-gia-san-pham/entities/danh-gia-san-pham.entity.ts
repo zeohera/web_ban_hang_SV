@@ -1,5 +1,5 @@
-import { NguoiDung } from 'src/nguoi-dung/entities/nguoi-dung.entity';
-import { SanPham } from 'src/san-pham/entities/san-pham.entity';
+import { NguoiDung } from 'src/modules/nguoi-dung/entities/nguoi-dung.entity';
+import { SanPham } from 'src/modules/san-pham/entities/san-pham.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity('DanhGiaSanPham')

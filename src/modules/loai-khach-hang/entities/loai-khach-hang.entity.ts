@@ -1,4 +1,4 @@
-import { NguoiDung } from 'src/nguoi-dung/entities/nguoi-dung.entity';
+import { NguoiDung } from 'src/modules/nguoi-dung/entities/nguoi-dung.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('LoaiKhachHang')
