@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateNguoiDungDto } from './dto/create-nguoi-dung.dto';
 import { UpdateNguoiDungDto } from './dto/update-nguoi-dung.dto';
+import { NguoiDungRepository } from './nguoi-dung.repository';
 
 @Injectable()
 export class NguoiDungService {
-  create(createNguoiDungDto: CreateNguoiDungDto) {
-    return 'This action adds a new nguoiDung';
+  constructor(private readonly nguoiDungRepository: NguoiDungRepository) {}
+
+  async create(createNguoiDungDto: CreateNguoiDungDto) {
+    try {
+      const newUser =
+        await this.nguoiDungRepository.createNguoiDung(createNguoiDungDto);
+      return newUser;
+    } catch (error) {
+      throw new BadRequestException('Unable to create user');
+    }
   }
 
-  findAll() {
-    return `This action returns all nguoiDung`;
+  async findAll() {
+    return await this.nguoiDungRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} nguoiDung`;
+  async findOne(id: number) {
+    const user = await this.nguoiDungRepository.findOneNguoiDung({
+      IdNguoiDung: id,
+    });
+    if (!user) {
+      throw new BadRequestException(`User with ID ${id} not found`);
+    }
+    return user;
   }
 
-  update(id: number, updateNguoiDungDto: UpdateNguoiDungDto) {
-    return `This action updates a #${id} nguoiDung`;
+  async update(id: number, updateNguoiDungDto: UpdateNguoiDungDto) {
+    const user = await this.findOne(id);
+    return await this.nguoiDungRepository.save({
+      ...user,
+      ...updateNguoiDungDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} nguoiDung`;
+  async remove(id: number) {
+    const user = await this.findOne(id);
+    return await this.nguoiDungRepository.remove(user);
   }
 }

@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateKhoHangDto } from './dto/create-kho-hang.dto';
 import { UpdateKhoHangDto } from './dto/update-kho-hang.dto';
+import { KhoHangRepository } from './kho-hang.repository';
 
 @Injectable()
 export class KhoHangService {
-  create(createKhoHangDto: CreateKhoHangDto) {
-    return 'This action adds a new khoHang';
+  constructor(private readonly khoHangRepository: KhoHangRepository) {}
+
+  async create(createKhoHangDto: CreateKhoHangDto) {
+    return await this.khoHangRepository.createKhoHang(createKhoHangDto);
   }
 
-  findAll() {
-    return `This action returns all khoHang`;
+  async findAll() {
+    return await this.khoHangRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} khoHang`;
+  async findOne(id: number) {
+    return await this.khoHangRepository.findOneKhoHang({ IdKhoHang: id });
   }
 
-  update(id: number, updateKhoHangDto: UpdateKhoHangDto) {
-    return `This action updates a #${id} khoHang`;
+  async update(id: number, updateKhoHangDto: UpdateKhoHangDto) {
+    return await this.khoHangRepository.update(id, updateKhoHangDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} khoHang`;
+  async remove(id: number) {
+    return await this.khoHangRepository.delete(id);
   }
 }

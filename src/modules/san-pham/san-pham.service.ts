@@ -2,25 +2,30 @@ import { Injectable } from '@nestjs/common';
 import { CreateSanPhamDto } from './dto/create-san-pham.dto';
 import { UpdateSanPhamDto } from './dto/update-san-pham.dto';
 
+import { SanPhamRepository } from './san-pham.repository';
+
 @Injectable()
 export class SanPhamService {
-  create(createSanPhamDto: CreateSanPhamDto) {
-    return 'This action adds a new sanPham';
+  constructor(private readonly sanPhamRepository: SanPhamRepository) {}
+
+  async create(createSanPhamDto: CreateSanPhamDto) {
+    const sanPham = this.sanPhamRepository.create(createSanPhamDto);
+    return await this.sanPhamRepository.save(sanPham);
   }
 
-  findAll() {
-    return `This action returns all sanPham`;
+  async findAll() {
+    return await this.sanPhamRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sanPham`;
+  async findOne(id: number) {
+    return await this.sanPhamRepository.findOneBy({ IdSanPham: id });
   }
 
-  update(id: number, updateSanPhamDto: UpdateSanPhamDto) {
-    return `This action updates a #${id} sanPham`;
+  async update(id: number, updateSanPhamDto: UpdateSanPhamDto) {
+    return await this.sanPhamRepository.update(id, updateSanPhamDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sanPham`;
+  async remove(id: number) {
+    return await this.sanPhamRepository.softDelete(id);
   }
 }

@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateDanhMucDto } from './dto/create-danh-muc.dto';
 import { UpdateDanhMucDto } from './dto/update-danh-muc.dto';
+import { DanhMucRepository } from './danh-muc.repository';
 
 @Injectable()
 export class DanhMucService {
-  create(createDanhMucDto: CreateDanhMucDto) {
-    return 'This action adds a new danhMuc';
+  constructor(private readonly danhMucRepository: DanhMucRepository) {}
+
+  async create(createDanhMucDto: CreateDanhMucDto) {
+    const findDanhMuc = await this.danhMucRepository.findOneBy({
+      TenDanhMuc: createDanhMucDto.TenDanhMuc,
+    });
+    if (findDanhMuc) {
+      throw new BadRequestException('DanhMuc is exist');
+    }
+    return this.danhMucRepository.save(createDanhMucDto);
   }
 
-  findAll() {
-    return `This action returns all danhMuc`;
+  async findAll() {
+    return this.danhMucRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} danhMuc`;
+  async findOne(id: number) {
+    return this.danhMucRepository.findOneBy({ IdDanhMuc: id });
   }
 
-  update(id: number, updateDanhMucDto: UpdateDanhMucDto) {
-    return `This action updates a #${id} danhMuc`;
+  async update(id: number, updateDanhMucDto: UpdateDanhMucDto) {
+    const findDanhMuc = await this.danhMucRepository.preload({
+      IdDanhMuc: id,
+      ...updateDanhMucDto,
+    });
+    if (!findDanhMuc) {
+      throw new BadRequestException('DanhMuc not found');
+    }
+    return this.danhMucRepository.save(findDanhMuc);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} danhMuc`;
+  async remove(id: number) {
+    const findDanhMuc = await this.danhMucRepository.findOneBy({
+      IdDanhMuc: id,
+    });
+    if (!findDanhMuc) {
+      throw new BadRequestException('DanhMuc not found');
+    }
+    return this.danhMucRepository.remove(findDanhMuc);
   }
 }

@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateNhaCungCapDto } from './dto/create-nha-cung-cap.dto';
 import { UpdateNhaCungCapDto } from './dto/update-nha-cung-cap.dto';
+import { NhaCungCapRepository } from './nha-cung-cap.repository';
 
 @Injectable()
 export class NhaCungCapService {
-  create(createNhaCungCapDto: CreateNhaCungCapDto) {
-    return 'This action adds a new nhaCungCap';
+  constructor(private readonly nhaCungCapRepository: NhaCungCapRepository) {}
+
+  async create(createNhaCungCapDto: CreateNhaCungCapDto) {
+    const existed = await this.nhaCungCapRepository.find({
+      where: { TenNhaCungCap: createNhaCungCapDto.TenNhaCungCap },
+    });
+    if (existed) {
+      throw new BadRequestException('NhaCungCap is exist');
+    }
+    return await this.nhaCungCapRepository.createNhaCungCap(
+      createNhaCungCapDto,
+    );
   }
 
-  findAll() {
-    return `This action returns all nhaCungCap`;
+  async findAll() {
+    return await this.nhaCungCapRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} nhaCungCap`;
+  async findOne(id: number) {
+    return await this.nhaCungCapRepository.findOne({
+      where: { IdNhaCungCap: id },
+    });
   }
 
-  update(id: number, updateNhaCungCapDto: UpdateNhaCungCapDto) {
-    return `This action updates a #${id} nhaCungCap`;
+  async update(id: number, updateNhaCungCapDto: UpdateNhaCungCapDto) {
+    return await this.nhaCungCapRepository.update(id, updateNhaCungCapDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} nhaCungCap`;
+  async remove(id: number) {
+    const nhaCungCap = await this.nhaCungCapRepository.findOne({
+      where: { IdNhaCungCap: id },
+    });
+    if (!nhaCungCap) {
+      throw new NotFoundException('NhaCungCap not found');
+    }
+    return await this.nhaCungCapRepository.remove(nhaCungCap);
   }
 }

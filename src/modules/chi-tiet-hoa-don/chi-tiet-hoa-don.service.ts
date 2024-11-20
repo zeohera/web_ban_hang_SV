@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChiTietHoaDonDto } from './dto/create-chi-tiet-hoa-don.dto';
 import { UpdateChiTietHoaDonDto } from './dto/update-chi-tiet-hoa-don.dto';
+import { ChiTietHoaDonRepository } from './chi-tiet-hoa-don.repository';
 
 @Injectable()
 export class ChiTietHoaDonService {
-  create(createChiTietHoaDonDto: CreateChiTietHoaDonDto) {
-    return 'This action adds a new chiTietHoaDon';
+  constructor(private chiTietHoaDonRepository: ChiTietHoaDonRepository) {}
+
+  async create(createChiTietHoaDonDto: CreateChiTietHoaDonDto) {
+    return this.chiTietHoaDonRepository.createChiTietHoaDon(
+      createChiTietHoaDonDto,
+    );
   }
 
-  findAll() {
-    return `This action returns all chiTietHoaDon`;
+  async findAll() {
+    return this.chiTietHoaDonRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chiTietHoaDon`;
+  async findOne(id: number) {
+    return this.chiTietHoaDonRepository.findOne({
+      where: { IdChiTietHoaDon: id },
+    });
   }
 
-  update(id: number, updateChiTietHoaDonDto: UpdateChiTietHoaDonDto) {
-    return `This action updates a #${id} chiTietHoaDon`;
+  async update(id: number, updateChiTietHoaDonDto: UpdateChiTietHoaDonDto) {
+    return this.chiTietHoaDonRepository.update(
+      { IdChiTietHoaDon: id },
+      updateChiTietHoaDonDto,
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} chiTietHoaDon`;
+  async remove(id: number) {
+    return this.chiTietHoaDonRepository.delete({
+      IdChiTietHoaDon: id,
+    });
   }
 }

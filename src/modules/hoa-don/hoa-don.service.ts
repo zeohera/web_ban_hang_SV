@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHoaDonDto } from './dto/create-hoa-don.dto';
 import { UpdateHoaDonDto } from './dto/update-hoa-don.dto';
+import { HoaDonRepository } from './hoa-don.repository';
 
 @Injectable()
 export class HoaDonService {
-  create(createHoaDonDto: CreateHoaDonDto) {
-    return 'This action adds a new hoaDon';
+  constructor(private readonly hoaDonRepository: HoaDonRepository) {}
+
+  async create(createHoaDonDto: CreateHoaDonDto) {
+    return this.hoaDonRepository.create(createHoaDonDto);
   }
 
-  findAll() {
-    return `This action returns all hoaDon`;
+  async findAll() {
+    return this.hoaDonRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} hoaDon`;
+  async findOne(id: number) {
+    return this.hoaDonRepository.findOne({
+      where: { IdHoaDon: id },});
   }
 
-  update(id: number, updateHoaDonDto: UpdateHoaDonDto) {
-    return `This action updates a #${id} hoaDon`;
+  async update(id: number, updateHoaDonDto: UpdateHoaDonDto) {
+    return this.hoaDonRepository.update(id, updateHoaDonDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} hoaDon`;
+  async remove(id: number) {
+    return this.hoaDonRepository.delete(id);
   }
 }
