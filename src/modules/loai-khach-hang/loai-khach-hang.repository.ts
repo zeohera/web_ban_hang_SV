@@ -4,8 +4,8 @@ import { LoaiKhachHang } from './entities/loai-khach-hang.entity';
 
 @Injectable()
 export class LoaiKhachHangRepository extends Repository<LoaiKhachHang> {
-  findAll() {
-    throw new Error('Method not implemented.');
+  async findAll() {
+    return await this.find();
   }
   constructor(private datasource: DataSource) {
     super(LoaiKhachHang, datasource.createEntityManager());

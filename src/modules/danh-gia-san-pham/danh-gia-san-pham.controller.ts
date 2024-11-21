@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { DanhGiaSanPhamService } from './danh-gia-san-pham.service';
 import { CreateDanhGiaSanPhamDto } from './dto/create-danh-gia-san-pham.dto';
@@ -18,7 +19,10 @@ import {
   ApiOkResponse,
   ApiNotFoundResponse,
   ApiBadRequestResponse,
+  ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('danh-gia-san-pham')
 @Controller('danh-gia-san-pham')
@@ -29,6 +33,19 @@ export class DanhGiaSanPhamController {
   @ApiOperation({ summary: 'Create a new danh gia san pham' })
   @ApiCreatedResponse({ description: 'Created a new danh gia san pham' })
   @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBody({
+    type: CreateDanhGiaSanPhamDto,
+    description: 'Danh gia san pham data',
+    examples: {
+      danhGiaSanPham: {
+        value: {
+          IdNhaCungCap: 1,
+          IdSanPham: 1,
+          NoiDung: 'This is a test',
+        },
+      },
+    },
+  })
   create(@Body() createDanhGiaSanPhamDto: CreateDanhGiaSanPhamDto) {
     return this.danhGiaSanPhamService.create(createDanhGiaSanPhamDto);
   }
@@ -52,6 +69,19 @@ export class DanhGiaSanPhamController {
   @ApiOperation({ summary: 'Update a danh gia san pham by id' })
   @ApiOkResponse({ description: 'Update a danh gia san pham by id' })
   @ApiNotFoundResponse({ description: 'Danh gia san pham not found' })
+  @ApiBody({
+    type: UpdateDanhGiaSanPhamDto,
+    description: 'Updated danh gia san pham data',
+    examples: {
+      danhGiaSanPham: {
+        value: {
+          IdNhaCungCap: 1,
+          IdSanPham: 1,
+          NoiDung: 'This is a test',
+        },
+      },
+    },
+  })
   update(
     @Param('id') id: string,
     @Body() updateDanhGiaSanPhamDto: UpdateDanhGiaSanPhamDto,
@@ -60,6 +90,8 @@ export class DanhGiaSanPhamController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Delete a danh gia san pham by id' })
   @ApiOkResponse({ description: 'Delete a danh gia san pham by id' })
   @ApiNotFoundResponse({ description: 'Danh gia san pham not found' })

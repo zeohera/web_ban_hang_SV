@@ -15,7 +15,8 @@ export class NhaCungCapService {
     const existed = await this.nhaCungCapRepository.find({
       where: { TenNhaCungCap: createNhaCungCapDto.TenNhaCungCap },
     });
-    if (existed) {
+    
+    if (existed.length > 0) {
       throw new BadRequestException('NhaCungCap is exist');
     }
     return await this.nhaCungCapRepository.createNhaCungCap(

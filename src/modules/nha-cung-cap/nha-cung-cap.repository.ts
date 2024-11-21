@@ -4,8 +4,8 @@ import { NhaCungCap } from './entities/nha-cung-cap.entity';
 
 @Injectable()
 export class NhaCungCapRepository extends Repository<NhaCungCap> {
-  findAll() {
-    throw new Error('Method not implemented.');
+  async findAll() {
+    return await this.find();
   }
   constructor(private datasource: DataSource) {
     super(NhaCungCap, datasource.createEntityManager());

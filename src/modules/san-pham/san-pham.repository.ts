@@ -4,8 +4,8 @@ import { SanPham } from './entities/san-pham.entity';
 
 @Injectable()
 export class SanPhamRepository extends Repository<SanPham> {
-  findAll() {
-    throw new Error('Method not implemented.');
+  async findAll() {
+    return await this.find();
   }
   constructor(private datasource: DataSource) {
     super(SanPham, datasource.createEntityManager());

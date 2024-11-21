@@ -4,8 +4,8 @@ import { NguoiDung } from './entities/nguoi-dung.entity';
 
 @Injectable()
 export class NguoiDungRepository extends Repository<NguoiDung> {
-  findAll() {
-    throw new Error('Method not implemented.');
+  async findAll() {
+    return await this.find();
   }
   constructor(private datasource: DataSource) {
     super(NguoiDung, datasource.createEntityManager());

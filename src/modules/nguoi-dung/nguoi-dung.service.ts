@@ -13,6 +13,8 @@ export class NguoiDungService {
         await this.nguoiDungRepository.createNguoiDung(createNguoiDungDto);
       return newUser;
     } catch (error) {
+      console.log(error, 'error');
+      
       throw new BadRequestException('Unable to create user');
     }
   }

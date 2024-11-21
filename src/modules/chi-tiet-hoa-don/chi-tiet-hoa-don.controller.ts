@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ChiTietHoaDonService } from './chi-tiet-hoa-don.service';
 import { CreateChiTietHoaDonDto } from './dto/create-chi-tiet-hoa-don.dto';
@@ -19,10 +20,16 @@ import {
   ApiNotFoundResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
+  ApiBody,
 } from '@nestjs/swagger';
+
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('chi-tiet-hoa-don')
 @ApiTags('ChiTietHoaDon')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 export class ChiTietHoaDonController {
   constructor(private readonly chiTietHoaDonService: ChiTietHoaDonService) {}
 
@@ -36,6 +43,19 @@ export class ChiTietHoaDonController {
   })
   @ApiInternalServerErrorResponse({
     description: 'An unexpected error occured while processing the request',
+  })
+  @ApiBody({
+    description: 'The request body should contain the chiTietHoaDon data',
+    examples: {
+      chiTietHoaDon: {
+        summary: 'ChiTietHoaDon data',
+        value: {
+          IdHoaDon: 1,
+          IdSanPham: 1,
+          SoLuongMua: 1,
+        },
+      },
+    },
   })
   create(@Body() createChiTietHoaDonDto: CreateChiTietHoaDonDto) {
     return this.chiTietHoaDonService.create(createChiTietHoaDonDto);
@@ -65,6 +85,17 @@ export class ChiTietHoaDonController {
     description: 'Bad request. Please check the request body validation errors',
   })
   @ApiNotFoundResponse({ description: 'The record does not exist' })
+  @ApiBody({
+    description: 'The request body should contain the chiTietHoaDon data',
+    examples: {
+      chiTietHoaDon: {
+        summary: 'ChiTietHoaDon data',
+        value: {
+          SoLuongMua: 1,
+        } as UpdateChiTietHoaDonDto,
+      },
+    },
+  })
   update(
     @Param('id') id: string,
     @Body() updateChiTietHoaDonDto: UpdateChiTietHoaDonDto,

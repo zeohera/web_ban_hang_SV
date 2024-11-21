@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { DanhMucService } from './danh-muc.service';
 import { CreateDanhMucDto } from './dto/create-danh-muc.dto';
@@ -18,15 +19,32 @@ import {
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiParam,
+  ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('danh-muc')
 @Controller('danh-muc')
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 export class DanhMucController {
   constructor(private readonly danhMucService: DanhMucService) {}
 
   @Post()
   @ApiCreatedResponse({ description: 'Create danh muc' })
+  @ApiBody({
+    description: 'Danh muc data',
+    type: CreateDanhMucDto,
+    examples: {
+      danhMuc: {
+        value: {
+          TenDanhMuc: 'Danh muc 1',
+        },
+        description: 'Danh muc data',
+      },
+    },
+  })
   create(@Body() createDanhMucDto: CreateDanhMucDto) {
     return this.danhMucService.create(createDanhMucDto);
   }
@@ -61,6 +79,18 @@ export class DanhMucController {
     description: 'Danh muc id',
     example: 1,
     required: true,
+  })
+  @ApiBody({
+    description: 'Danh muc data',
+    type: UpdateDanhMucDto,
+    examples: {
+      danhMuc: {
+        value: {
+          TenDanhMuc: 'Danh muc 1',
+        },
+        description: 'Danh muc data',
+      },
+    },
   })
   update(@Param('id') id: string, @Body() updateDanhMucDto: UpdateDanhMucDto) {
     return this.danhMucService.update(+id, updateDanhMucDto);

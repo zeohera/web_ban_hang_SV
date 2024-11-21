@@ -5,4 +5,3 @@ export class CreateNhaCungCapDto extends PickType(NhaCungCap, [
   'TenNhaCungCap',
   'DiaChi',
 ] as const) {}
-
