@@ -29,8 +29,8 @@ import { RolesGuard } from '../auth/role.guard';
 
 @Controller('san-pham')
 @ApiTags('san-pham')
-@ApiBearerAuth()
-@UseGuards(AuthGuard, RolesGuard)
+//@ApiBearerAuth()
+//@UseGuards(AuthGuard, RolesGuard)
 @Roles(ROLES.Admin)
 export class SanPhamController {
   constructor(private readonly sanPhamService: SanPhamService) {}

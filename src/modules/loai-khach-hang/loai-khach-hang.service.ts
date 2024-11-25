@@ -10,9 +10,7 @@ export class LoaiKhachHangService {
   ) {}
 
   create(createLoaiKhachHangDto: CreateLoaiKhachHangDto) {
-    return this.loaiKhachHangRepository.createLoaiKhachHang(
-      createLoaiKhachHangDto,
-    );
+    return this.loaiKhachHangRepository.create(createLoaiKhachHangDto);
   }
 
   findAll() {

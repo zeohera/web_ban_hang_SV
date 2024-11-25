@@ -28,8 +28,8 @@ import { RolesGuard } from '../auth/role.guard';
 
 @ApiTags('nha-cung-cap')
 @Controller('nha-cung-cap')
-@ApiBearerAuth()
-@UseGuards(AuthGuard, RolesGuard)
+//@ApiBearerAuth()
+//@UseGuards(AuthGuard, RolesGuard)
 @Roles(ROLES.Admin)
 export class NhaCungCapController {
   constructor(private readonly nhaCungCapService: NhaCungCapService) {}

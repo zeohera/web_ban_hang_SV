@@ -97,8 +97,8 @@ export class NguoiDungController {
     return this.nguoiDungService.update(+id, updateNguoiDungDto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard, RolesGuard)
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard, RolesGuard)
   @Roles(ROLES.Admin)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a user' })

@@ -1,25 +1,26 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcrypt';
+import { NguoiDungRepository } from '../nguoi-dung/nguoi-dung.repository';
+import { NguoiDungService } from '../nguoi-dung/nguoi-dung.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
+    private nguoiDungRepository: NguoiDungService,
     private readonly jwtService: JwtService,
   ) {}
   async login(loginData: LoginDto) {
-    const user = await this.userService.findOneUserBy({
-      email: loginData.email,
+    const user = await this.nguoiDungRepository.findOneUserBy({
+      Email: loginData.Email,
     });
-    if (!compareSync(loginData.password, user.password)) {
-      throw new BadRequestException('email or password incorect');
+    if (!compareSync(loginData.MatKhau, user.MatKhau)) {
+      throw new BadRequestException('email or password incorrect');
     }
     const accessToken = this.jwtService.sign({
-      sub: user.id,
-      email: user.email,
+      sub: user.IdNguoiDung,
+      email: user.Email,
     });
     return {
       accessToken,

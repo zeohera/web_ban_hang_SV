@@ -5,9 +5,9 @@ export class LoginDto {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsEmail()
-  email: string;
+  Email: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
-  password: string;
+  MatKhau: string;
 }

@@ -22,8 +22,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get(':id')
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard, RolesGuard)
+  //@ApiBearerAuth()
+  //@UseGuards(AuthGuard, RolesGuard)
   @Roles(ROLES.Admin)
   findOneUser(@Param('id') id: number) {
     return this.userService.findOneUserById(id);

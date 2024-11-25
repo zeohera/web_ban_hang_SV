@@ -25,11 +25,10 @@ import {
 
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
-
-@Controller('chi-tiet-hoa-don')
-@ApiTags('ChiTietHoaDon')
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
+@Controller('chi-tiet-hoa-don')
+@ApiTags('ChiTietHoaDon')
 export class ChiTietHoaDonController {
   constructor(private readonly chiTietHoaDonService: ChiTietHoaDonService) {}
 

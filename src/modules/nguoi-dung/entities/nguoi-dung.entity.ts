@@ -1,7 +1,5 @@
-
 import { LoaiKhachHang } from 'src/modules/loai-khach-hang/entities/loai-khach-hang.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-
 
 @Entity('NguoiDung')
 export class NguoiDung {
@@ -11,7 +9,7 @@ export class NguoiDung {
   @Column({ type: 'char', length: 10 })
   SoDienThoai: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 256 })
   MatKhau: string;
 
   @Column({ type: 'varchar', length: 50 })

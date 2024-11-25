@@ -14,12 +14,4 @@ export class LoaiKhachHangRepository extends Repository<LoaiKhachHang> {
   async findOneLoaiKhachHang(where: FindOptionsWhere<LoaiKhachHang>) {
     return this.findOneBy({ ...where });
   }
-
-  async createLoaiKhachHang(user: DeepPartial<LoaiKhachHang>) {
-    const findLoaiKhachHang = await this.findOneLoaiKhachHang({});
-    if (findLoaiKhachHang) {
-      throw new BadRequestException('LoaiKhachHang is exist');
-    }
-    return await this.save(user);
-  }
 }

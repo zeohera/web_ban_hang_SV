@@ -1,7 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateNguoiDungDto } from './dto/create-nguoi-dung.dto';
 import { UpdateNguoiDungDto } from './dto/update-nguoi-dung.dto';
 import { NguoiDungRepository } from './nguoi-dung.repository';
+import { FindOptionsWhere } from 'typeorm';
+import { NguoiDung } from './entities/nguoi-dung.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class NguoiDungService {
@@ -9,12 +16,15 @@ export class NguoiDungService {
 
   async create(createNguoiDungDto: CreateNguoiDungDto) {
     try {
-      const newUser =
-        await this.nguoiDungRepository.createNguoiDung(createNguoiDungDto);
+      const password = bcrypt.hashSync(createNguoiDungDto.MatKhau, 10);
+      const newUser = await this.nguoiDungRepository.createNguoiDung({
+        ...createNguoiDungDto,
+        MatKhau: password,
+      });
       return newUser;
     } catch (error) {
       console.log(error, 'error');
-      
+
       throw new BadRequestException('Unable to create user');
     }
   }
@@ -44,5 +54,11 @@ export class NguoiDungService {
   async remove(id: number) {
     const user = await this.findOne(id);
     return await this.nguoiDungRepository.remove(user);
+  }
+
+  async findOneUserBy(where: FindOptionsWhere<NguoiDung>) {
+    const user = await this.nguoiDungRepository.findOneNguoiDung({ ...where });
+    if (!user) throw new NotFoundException('User not found');
+    return user;
   }
 }
